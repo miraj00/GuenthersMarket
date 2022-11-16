@@ -24,20 +24,19 @@ public class GuenthersMarket {
 		
 		System.out.print("What item would you like to order ? ");
 		String itemName = scnr.nextLine();
-		
-//		if (itemName.equalsIgnoreCase(itemName))
-//			
-//		}
-//		catch (ArrayIndexOutOfBoundsException e) {
-//			System.out.println("Error !! - Item Name Do not Match !!");
-//		
-//		}
-		
+			
 		Double itemPrice = items.get(itemName);
-		System.out.println("Adding " + itemName + " to cart at $ " + itemPrice);	
+			
+		// if imtemPrice do not match, it will give error and program will restart
+		if (itemPrice == null) {
+		System.out.println("Error !! - Item Name Do not Match !! ");
+		main(null);
+		}
 		
+		System.out.println("Adding " + itemName + " to cart at $ " + itemPrice);
 		addToArrays(itemName, itemPrice);
 	
+		
 		boolean promptingToContinue = true;
 			
 		while (promptingToContinue) {
@@ -50,10 +49,18 @@ public class GuenthersMarket {
 				printMenu();
 				System.out.print("What item would you like to order ? ");		
 				
-				String itemName3 = scnr.nextLine();	
-				Double itemPrice3 = items.get(itemName3);
-				System.out.println("Adding " + itemName3 + " to cart at $ " + itemPrice3);
-				addToArrays(itemName3, itemPrice3);			
+				String itemNamePrompt = scnr.nextLine();	
+				Double itemPricePrompt = items.get(itemNamePrompt);
+				
+								
+				// if itemPrice do not match, it will give error and program will restart
+				if (itemPricePrompt == null) {
+				System.out.println("Error !! - Item Name Do not Match !! --- Restarting the Program !! ");
+				main(null);
+				}
+				
+				System.out.println("Adding " + itemNamePrompt + " to cart at $ " + itemPricePrompt);
+				addToArrays(itemNamePrompt, itemPricePrompt);			
 			}
 			
 			else if (userContinues.equalsIgnoreCase("n")) 
@@ -84,9 +91,9 @@ public class GuenthersMarket {
 	
 	
 	// created method that adds to Parallel Arrays
-	public static void addToArrays (String itemName1, Double itemPrice1 ) {
-		orderNames.add(itemName1);
-		orderPrices.add(itemPrice1);		
+	public static void addToArrays (String addItemName, Double addItemPrice ) {
+		orderNames.add(addItemName);
+		orderPrices.add(addItemPrice);		
 	}
 	
 	
