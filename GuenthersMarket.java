@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -26,16 +27,25 @@ public class GuenthersMarket {
 		String itemName = scnr.nextLine();
 			
 		Double itemPrice = items.get(itemName);
+	
+		
+		for (Map.Entry<String, Double> theItem : items.entrySet()) {
+			String key = theItem.getKey();
+			Double val = theItem.getValue();
 			
-		// if imtemPrice do not match, it will give error and program will restart
+			if (itemName.equalsIgnoreCase(key)) {
+				System.out.println("Adding " + itemName + " to cart at $ " + itemPrice);
+				addToArrays(key, val);	
+			} 	
+		}
+			
+		// if itemPrice do not match, it will give error and program will restart
 		if (itemPrice == null) {
-		System.out.println("Error !! - Item Name Do not Match !! ");
-		main(null);
+			System.out.println("Error !! - Item Name Do not Match !! --- Restarting the Program !!");
+			sleep(4000);                           																	 // adding delay time method before restarting program
+			main(null);
 		}
 		
-		System.out.println("Adding " + itemName + " to cart at $ " + itemPrice);
-		addToArrays(itemName, itemPrice);
-	
 		
 		boolean promptingToContinue = true;
 			
@@ -51,14 +61,7 @@ public class GuenthersMarket {
 				
 				String itemNamePrompt = scnr.nextLine();	
 				Double itemPricePrompt = items.get(itemNamePrompt);
-				
-								
-				// if itemPrice do not match, it will give error and program will restart
-				if (itemPricePrompt == null) {
-				System.out.println("Error !! - Item Name Do not Match !! --- Restarting the Program !! ");
-				main(null);
-				}
-				
+							
 				System.out.println("Adding " + itemNamePrompt + " to cart at $ " + itemPricePrompt);
 				addToArrays(itemNamePrompt, itemPricePrompt);			
 			}
@@ -75,10 +78,7 @@ public class GuenthersMarket {
 		scnr.close();		
 	}
 	
-	
-	
-	
-	
+		
 	// created method to calculate average
 	private static Double calculateAverage(List <Double> orderPrices) {	   	  
 	      for (int i=0; i< orderPrices.size(); i++) {	         
@@ -87,6 +87,18 @@ public class GuenthersMarket {
 	       }
 	      System.out.println("Average price per item in oder was $ " + avg);
 	      return avg;
+	}
+	
+	// this method picks highest priced item in selected items from list
+	private static void highestItem (ArrayList<Float>priceList) {
+		int highIndex = priceList.indexOf(Collections.max(priceList));
+		System.out.println(" The index of the most expensive item was : " + highIndex );
+	}
+	
+	// this method picks lowest priced item from selected items from list
+	private static void lowestItem (ArrayList<Float>priceList) {
+		int lowIndex = priceList.indexOf(Collections.min(priceList));
+		System.out.println(" The index of the least expensive item was : " + lowIndex );
 	}
 	
 	
@@ -99,12 +111,12 @@ public class GuenthersMarket {
 	
     // added items in Map
 	private static void fillItemsMap() {
-		items.put("apple", 0.99);
-		items.put("banana", 0.59);
+		items.put("bag of apple", 0.99);
+		items.put("pack of banana", 0.59);
 		items.put("cauliflower", 1.59);
 		items.put("dragonfruit", 2.19);
 		items.put("elderberry", 1.79);
-		items.put("figs", 2.09);
+		items.put("bag of figs", 2.09);
 		items.put("grapefruit",1.99);
 		items.put("honeydew", 3.49);
 	}
@@ -112,8 +124,8 @@ public class GuenthersMarket {
 	
 	// this method prints Menu every time the user selects "y"
 	private static void printMenu() {
-		System.out.println("Item\t\t\tPrice");
-		System.out.println("====\t\t\t=====");
+		System.out.println("Item\t\t\t  Price");
+		System.out.println("====\t\t\t  =====");
 		
 		for(Map.Entry<String, Double> entry : items.entrySet()) {
 			System.out.println(entry.getKey() + "\t\t $ " + entry.getValue());
@@ -127,7 +139,17 @@ public class GuenthersMarket {
 			System.out.println(orderNames.get(i) + "    $" + orderPrices.get(i));
 		}		
 	}
+		
 	
+	// added delay time ( sleep ) method before restarting program
+	private static void sleep(long millies) {
+		try {
+			Thread.sleep(millies);
+		} catch (InterruptedException e) {
+			System.out.println("Thread is interrupted");
+			Thread.currentThread().interrupt();
+		}
+	}
 	
 }
 
